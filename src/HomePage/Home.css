@@ -1,0 +1,250 @@
+/* General styling */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #121212;
+    color: #fff;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    font-size: large;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+a:hover {
+    color: #0ff;
+    text-decoration: underline; /* Add underline on hover */
+    text-decoration-color: white; /* White underline */
+    transition: width 0.4s ease;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* Navbar styling */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #1f1f1f;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: whitesmoke;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+nav ul {
+    display: flex;
+    gap: 1rem;
+}
+
+nav ul li {
+    margin: 0;
+}
+
+nav ul li a:hover {
+    color: whitesmoke;
+    font-weight: 600;
+}
+
+.sign-in {
+    padding: 0.5rem 1rem;
+    background-color: #5858e6;
+    width: 100px;
+    color: white;
+    font-size: medium;
+    font-weight: 500;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    border:none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.sign-in:hover {
+    background-color: #7d7df5;
+    color: #fff;
+}
+
+/* Hero section */
+.hero {
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+}
+
+.hero-image {
+    flex: 1;
+}
+
+.hero-image img {
+    max-width: 60%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.hero-content {
+    flex: 1;
+    text-align: right;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+.search-bar {
+    padding: 1rem;
+    width: 80%;
+    max-width: 600px;
+    border: none;
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    background-color: #2a2a2a;
+    color: white;
+}
+
+.search-bar::placeholder {
+    color: #888;
+}
+
+/* Featured competitions */
+.featured {
+    padding: 2rem;
+    text-align: center;
+}
+
+.featured h2 {
+    font-size: 2rem;
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.competition-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.competition-card {
+    background-color: #2a2a2a;
+    padding: 1.5rem;
+    border-radius: 10px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    transition: transform 0.3s ease;
+}
+
+.competition-card:hover {
+    transform: scale(1.05);
+}
+
+.competition-card h3 {
+    color: white;
+}
+
+.competition-card p {
+    color: #aaa;
+}
+.competition-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.competition-image {
+    width: 100%; /* Adjust as necessary */
+    height: auto; /* Keep the aspect ratio */
+    max-width: 200px; /* Limit maximum size */
+}
+/* Footer */
+footer {
+    background-color: #1f1f1f;
+    padding: 1rem;
+    text-align: center;
+    color: #777;
+}
+
+footer p {
+    margin: 0;
+}
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    max-width: 600px;
+    width: 100%;
+    height: 44px;
+    border: 1px solid #dfe1e5;
+    border-radius: 24px;
+    padding: 5px;
+    box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+    background: white;
+}
+
+.search-wrapper:hover {
+    box-shadow: 0 1px 6px rgba(32,33,36,0.45);
+}
+
+.search-wrapper input{
+    font-size: large;
+    font-weight: 700;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color : #2a2a2a;
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0 15px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    background: transparent;
+}
+
+.search-button {
+    background-color: #5858e6;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2px;
+    color: white;
+}
+
+.search-button:hover {
+    background-color: #7d7df5;
+}
+
+.search-button svg {
+    font-size: 18px;
+}
