@@ -8,11 +8,10 @@ import {
   faUser,
   faSearch,
   faFilter,
-  faGlobe,
   faThumbsUp,
   faDownload 
 } from '@fortawesome/free-solid-svg-icons';
-import astro from "./astro2.png";
+import astro from "./earth.png";
 import './Datasets.css';
 
 const DatasetsPage = () => {
@@ -63,25 +62,32 @@ const DatasetsPage = () => {
       {/* Main content */}
       <div className="main-content">
         {/* Header and Search */}
+       
         <div className="header-section">
-        <FontAwesomeIcon icon={faGlobe} className="planet-icon" />
-          <h1 className="page-title">Datasets</h1>
-          
-          <div className="search-section">
-            <div className="search-container">
-              <FontAwesomeIcon icon={faSearch} className="search-icon" />
-              <input 
-                type="text"
-                placeholder="Search datasets..." 
-                className="search-input"
-              />
-            </div>
-            <button className="filter-button">
-              <FontAwesomeIcon icon={faFilter} className="filter-icon" />
-              Filters
-            </button>
+  <div className="title-wrapper">
+          <div className="earth">
+            <img src={astro} alt="Data Science Illustration" />
           </div>
+          <h1 className="page-title">Datasets</h1>
         </div>
+
+        {/* Search and Filter Section */}
+        <div className="search-section">
+          <div className="search-container">
+            <FontAwesomeIcon icon={faSearch} className="search-icon" />
+            <input 
+              type="text"
+              placeholder="Search datasets..." 
+              className="search-input"
+            />
+          </div>
+          <button className="filter-button">
+            <FontAwesomeIcon icon={faFilter} className="filter-icon" />
+            Filters
+          </button>
+        </div>
+      </div>
+
 
         {/* Dataset Grid */}
         <div className="dataset-grid">

@@ -282,9 +282,23 @@ body {
     }
   }
 
-  .planet-icon {
-    font-size: 2rem;
-    color: #4a90e2;
-    margin-bottom: 0.5rem;
+  .title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+.earth{
+  width:10%;
+}
+
+  .earth img {
+    width: 100%; /* Resize image to 20% */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  .page-title {
+    font-size: 2rem; /* Adjust if needed */
+    margin: 0;
   }
   
