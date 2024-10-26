@@ -281,3 +281,10 @@ body {
       grid-template-columns: 1fr;
     }
   }
+
+  .planet-icon {
+    font-size: 2rem;
+    color: #4a90e2;
+    margin-bottom: 0.5rem;
+  }
+  

@@ -8,9 +8,11 @@ import {
   faUser,
   faSearch,
   faFilter,
+  faGlobe,
   faThumbsUp,
   faDownload 
 } from '@fortawesome/free-solid-svg-icons';
+import astro from "./astro2.png";
 import './Datasets.css';
 
 const DatasetsPage = () => {
@@ -62,6 +64,7 @@ const DatasetsPage = () => {
       <div className="main-content">
         {/* Header and Search */}
         <div className="header-section">
+        <FontAwesomeIcon icon={faGlobe} className="planet-icon" />
           <h1 className="page-title">Datasets</h1>
           
           <div className="search-section">
