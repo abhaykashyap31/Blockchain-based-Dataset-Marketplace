@@ -6,6 +6,7 @@ body {
     color: #fff;
 }
 
+
 li {
     text-decoration: none;
     color: white;
@@ -91,11 +92,12 @@ nav ul li a:hover {
     max-width: 60%;
     height: auto;
     border-radius: 10px;
+    overflow: hidden;
 }
 
 .hero-content {
     flex: 1;
-    text-align: right;
+    /* text-align: right; */
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
@@ -189,7 +191,7 @@ footer p {
 }
 .search-container {
     display: flex;
-    width: 100%;
+    width: 80%;
     justify-content: center;
     align-items: center;
     background-color: white;
