@@ -37,7 +37,7 @@ const HomePage = () => {
                 <div className="hero-content">
                     <h1>Welcome to DataScience Hub</h1>
                     <div className="search-container">
-                        <div className="search-wrapper">
+        
                             <input
                                 type="text"
                                 placeholder="Search for competitions, datasets, or discussions..."
@@ -48,8 +48,7 @@ const HomePage = () => {
                             <button className="search-button" onClick={handleSearch}>
                                 <FontAwesomeIcon icon={faSearch} />
                             </button>
-                        </div>
-                    </div>
+                     </div>
                 </div>
             </section>
 
