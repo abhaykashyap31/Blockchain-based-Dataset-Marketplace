@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 import "./Home.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faBars, faTimes, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import astro from './astro1.png';
 import cv from "./cvision.jpeg";
 import graph from "./finance.jpeg";
 import doc from "./robodoc.jpeg";
 
-
 const HomePage = () => {
     const [searchQuery, setSearchQuery] = useState('');
-    
+    const [menuOpen, setMenuOpen] = useState(false);
+
     const handleSearch = () => {
         console.log("Searching for:", searchQuery);
+    };
+
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
     };
 
     return (
@@ -20,7 +24,10 @@ const HomePage = () => {
             <header>
                 <nav>
                     <div className="logo">DataScience Hub</div>
-                    <ul>
+                    <div className="menu-icon" onClick={toggleMenu}>
+                        <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
+                    </div>
+                    <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
                         <li>Competitions</li>
                         <li>Datasets</li>
                         <li>Courses</li>
@@ -37,18 +44,17 @@ const HomePage = () => {
                 <div className="hero-content">
                     <h1>Welcome to DataScience Hub</h1>
                     <div className="search-container">
-        
-                            <input
-                                type="text"
-                                placeholder="Search for competitions, datasets, or discussions..."
-                                className="search-input"
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                            />
-                            <button className="search-button" onClick={handleSearch}>
-                                <FontAwesomeIcon icon={faSearch} />
-                            </button>
-                     </div>
+                        <input
+                            type="text"
+                            placeholder="Search for competitions, datasets, or discussions..."
+                            className="search-input"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                        <button className="search-button" onClick={handleSearch}>
+                            <FontAwesomeIcon icon={faSearch} />
+                        </button>
+                    </div>
                 </div>
             </section>
 
@@ -70,7 +76,12 @@ const HomePage = () => {
                         <h3>Computer Vision Challenge</h3>
                         <p>Improve image recognition using deep learning</p>
                     </div>
+                    {/* Add more competition cards as needed */}
                 </div>
+                <button className="see-all">
+                    See All
+                    <FontAwesomeIcon icon={faArrowRight} />
+                </button>
             </section>
 
             <footer>

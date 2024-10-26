@@ -6,6 +6,72 @@ body {
     color: #fff;
 }
 
+header{
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    z-index: 10000000;
+    /* overflow: hidden; */
+}
+
+
+/* General styles */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.menu-icon {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li {
+    cursor: pointer;
+}
+
+.sign-in {
+    padding: 8px 16px;
+}
+
+/* Responsive styles */
+@media (max-width: 701px) {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 70px;
+        right: 0;
+        background: white;
+        width: 100%;
+        flex-direction: column;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .menu-icon {
+        display: block;
+    }
+
+    
+}
+
+
+
+
 
 li {
     text-decoration: none;
@@ -77,6 +143,7 @@ nav ul li a:hover {
 
 /* Hero section */
 .hero {
+    margin-top: 100px;
     height: 70vh;
     display: flex;
     align-items: center;
@@ -237,4 +304,23 @@ footer p {
 
 .search-button svg {
     font-size: 18px;
+}
+
+
+.see-all {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+    background-color: #5858e6;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.see-all:hover {
+    background-color: #7d7df5;
 }
