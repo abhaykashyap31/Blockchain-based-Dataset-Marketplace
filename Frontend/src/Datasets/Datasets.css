@@ -42,7 +42,7 @@ body {
     border: none;
     border-radius: 0.5rem;
     background: none;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: 'Courier New', Courier, monospace;
     font-size: larger;
     font-weight: 800;
     color: white;
@@ -86,7 +86,7 @@ body {
     font-weight: bold;
     margin-bottom: 1.5rem;
     color: whitesmoke;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: 'Courier New', Courier, monospace;
     font-weight: 700;
   }
   
@@ -106,7 +106,7 @@ body {
     left: 0.75rem;
     top: 50%;
     transform: translateY(-50%);
-    color: #9ca3af;
+    color: #121212;
     width: 1rem;
   }
   
