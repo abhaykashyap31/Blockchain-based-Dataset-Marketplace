@@ -10,12 +10,13 @@ import {
     faCoins,
     faEdit
 } from '@fortawesome/free-solid-svg-icons';
+import astro from "./profile-new.png";
 import './Profile.css';
 import def from './default-profile.jpeg';
 
 const ProfileDashboard = () => {
     const [profilePicture, setProfilePicture] = useState(def); // Placeholder profile image
-    const [username] = useState('JohnDoe'); // Static username for now
+    const [username] = useState('John Doe'); // Static username for now
     const [email] = useState('johndoe@example.com'); // Static email for now
     const [currency] = useState(100); // Example currency amount
     const [datasets] = useState(['Dataset 1', 'Dataset 2', 'Dataset 3']); // Sample datasets
@@ -30,31 +31,46 @@ const ProfileDashboard = () => {
             reader.readAsDataURL(file); // Read the file as a data URL
         }
     };
+  const sidebarLinks = [
+    { name: 'Home', icon: faHome, active: false },
+    { name: 'Competition', icon: faTrophy, active: false },
+    { name: 'Model', icon: faCode, active: false },
+    { name: 'Discussions', icon: faComments, active: false },
+    { name: 'Profile', icon: faUser, active: false }
+  ];
 
-    const sidebarLinks = [
-        { name: 'Home', icon: faHome, active: false },
-        { name: 'Competition', icon: faTrophy, active: false },
-        { name: 'Model', icon: faCode, active: false },
-        { name: 'Discussions', icon: faComments, active: false },
-        { name: 'Profile', icon: faUser, active: false }
-    ];
 
-    return (
-        <div className="whole">
-            <div className="usidebar">
-                <div className="usidebar-links">
-                    {sidebarLinks.map((link) => (
-                        <button
-                            key={link.name}
-                            className={`sidebar-link ${link.active ? 'active' : ''}`}
-                        >
-                            <FontAwesomeIcon icon={link.icon} className="usidebar-icon" />
-                            {link.name}
-                        </button>
-                    ))}
-                </div>
-            </div>
-            <div className="profile-dashboard">
+  return (
+    <div className="container">
+      {/* Fixed Sidebar */}
+      <div className="sidebar">
+        <div className="sidebar-links">
+          {sidebarLinks.map((link) => (
+            <button
+              key={link.name}
+              className={`sidebar-link ${link.active ? 'active' : ''}`}
+            >
+              <FontAwesomeIcon icon={link.icon} className="sidebar-icon" />
+              {link.name}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Main content */}
+      <div className="main-content">
+        {/* Header and Search */}
+       
+        <div className="header-section">
+  <div className="title-wrapper">
+          <div className="earth">
+            <img src={astro} alt="Data Science Illustration" />
+          </div>
+        </div>
+
+        {/* Search and Filter Section */}
+
+        <div className="profile-dashboard">
                 <div className="left-section">
                     <h2>Profile Dashboard</h2>
                     <div className="user-info">
@@ -101,8 +117,10 @@ const ProfileDashboard = () => {
                     
                 </div>
             </div>
-        </div>
-    );
+      </div></div></div>
+
+
+  );
 };
 
 export default ProfileDashboard;

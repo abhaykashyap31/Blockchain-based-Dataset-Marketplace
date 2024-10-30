@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route,Routes } from 'react-router-dom';
 import './App.css';
 import HomePage from "./HomePage/Home";
 import DatasetsPage from "./Datasets/Dataset"
-import Profile from "./Profile/Profile"
+import ProfileDashboard from './Profile/Profile';
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/datasets" element={<DatasetsPage />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route path="/profile" element={<ProfileDashboard/>} />
     </Routes>
     </Router>
     </>
