@@ -1,0 +1,169 @@
+
+.whole {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background-color: #121212;
+}
+
+/* Profile dashboard container */
+.profile-dashboard {
+    width: 100%;
+    margin-left: 50px; /* Takes up 75% of the width */
+    display: flex;
+    justify-content: flex-end; /* Aligns content to the right */
+}
+
+/* Sidebar styling */
+.sidebar {
+    width: auto; /* Reduced to 25% */
+    background-color: #1f1f1f;
+    color: #fff;
+    display: flex;
+    margin: auto;
+    right:0;
+    left:85%;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.sidebar-links {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin: 10px 0;
+    text-align: left;
+}
+
+.sidebar-link.active, .sidebar-link:hover {
+    color: whitesmoke;
+}
+
+.sidebar-icon {
+    margin-right: 10px;
+}
+
+/* Left section with user information */
+.left-section {
+    flex: 2;
+    margin-right: 20px;
+}
+
+.right-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+h2 {
+    margin-left:auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+    color: whitesmoke;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 900;
+    font-size: xx-large;
+}
+
+.user-info {
+    margin-bottom: 20px;
+}
+
+span{
+    font-size: larger;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+}
+
+.icon {
+    margin-right: 10px;
+    color: whitesmoke;
+}
+
+.label {
+    font-weight: bold;
+    font-size: x-large;
+    margin-right: 5px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.upgrade-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 800;
+    font-size: larger;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px; /* Add this line */
+    align-self: flex-end; /* Optional: if you want to align it to the right */
+}
+
+.upgrade-button:hover {
+    background-color: #45a049;
+}
+
+.datasets-section h3 {
+    margin-bottom: 10px;
+    color: whitesmoke;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.datasets-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.datasets-section li {
+    background-color: #2a2a2a;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 5px 0;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.profile-picture-container {
+    position: relative;
+}
+
+.profile-picture {
+    width: 100px;
+    margin-top:50px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.edit-button {
+    bottom: 5px;
+    right: 5px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.edit-button:hover {
+    background-color: #0056b3;
+}
