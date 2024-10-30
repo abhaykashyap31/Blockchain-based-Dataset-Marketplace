@@ -21,18 +21,18 @@
     color: #fff;
     display: flex;
     margin: auto;
-    right:0;
-    left:85%;
+    margin-bottom: 10px;
+    top:0;
     flex-direction: column;
     align-items: flex-start;
 }
 
-.sidebar-links {
+.usidebar-links {
     display: flex;
     flex-direction: column;
 }
 
-.sidebar-link {
+.usidebar-link {
     display: flex;
     align-items: center;
     padding: 10px;
@@ -45,7 +45,7 @@
     text-align: left;
 }
 
-.sidebar-link.active, .sidebar-link:hover {
+.usidebar-link.active, .sidebar-link:hover {
     color: whitesmoke;
 }
 

@@ -41,14 +41,14 @@ const ProfileDashboard = () => {
 
     return (
         <div className="whole">
-            <div className="sidebar">
-                <div className="sidebar-links">
+            <div className="usidebar">
+                <div className="usidebar-links">
                     {sidebarLinks.map((link) => (
                         <button
                             key={link.name}
                             className={`sidebar-link ${link.active ? 'active' : ''}`}
                         >
-                            <FontAwesomeIcon icon={link.icon} className="sidebar-icon" />
+                            <FontAwesomeIcon icon={link.icon} className="usidebar-icon" />
                             {link.name}
                         </button>
                     ))}
