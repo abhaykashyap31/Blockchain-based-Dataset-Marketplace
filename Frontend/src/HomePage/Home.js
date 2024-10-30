@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {Link, BrowserRouter as Router} from "react-router-dom";
 import "./Home.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faBars, faTimes, faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -20,7 +21,7 @@ const HomePage = () => {
     };
 
     return (
-        <div>
+            <div>    
             <header>
                 <nav>
                     <div className="logo">DataScience Hub</div>
@@ -28,15 +29,16 @@ const HomePage = () => {
                         <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
                     </div>
                     <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
-                        <li>Competitions</li>
-                        <li>Datasets</li>
-                        <li>Courses</li>
-                        <li>Discussion</li>
+                        <li><Link to="/competitions">Competitions</Link></li>
+                        <li><Link to="/datasets">Datasets</Link></li>
+                        <li><Link to="/discussions">Discussions</Link></li>
+                        <li><Link to="/profile">Profile</Link></li>
                     </ul>
-                    <button className="sign-in">SIGN IN</button>
+                    <Link to="/login">
+                        <button className="sign-in">SIGN IN</button>
+                    </Link>
                 </nav>
             </header>
-
             <section className="hero">
                 <div className="hero-image">
                     <img src={astro} alt="Data Science Illustration" />
@@ -87,7 +89,7 @@ const HomePage = () => {
             <footer>
                 <p>© 2024 DataScience Hub. All rights reserved.</p>
             </footer>
-        </div>
+        </div> 
     );
 }
 
