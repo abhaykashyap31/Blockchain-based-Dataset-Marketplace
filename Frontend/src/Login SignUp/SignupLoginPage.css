@@ -92,3 +92,14 @@
   .signup-login-toggle-button:hover {
     text-decoration: underline;
   }
+
+  .sign-to-login{
+    background-color: red;
+    border:none;
+    color:white;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    cursor: pointer;
+  }

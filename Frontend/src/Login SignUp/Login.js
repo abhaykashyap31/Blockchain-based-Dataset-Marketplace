@@ -1,29 +1,33 @@
+// LoginPage.js
 import React, { useState } from 'react';
 import './SignupLoginPage.css';
+import { useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { Auth } from '../Firebase/FirebaseAuth';
 
-const SignupLoginPage = () => {
-  const [isSignup, setIsSignup] = useState(false);
+const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log('Email:', email);
-    console.log('Password:', password);
-  };
+    try{
+      await signInWithEmailAndPassword(Auth,email,password);
+      alert("Login Successful");
+      navigate('/');
+    }catch(error){
+    alert(error.message);
 
-  const toggleSignup = () => {
-    setIsSignup(!isSignup);
+    }
   };
 
   return (
     <div className="signup-login-container">
       <div className="signup-login-card">
-        <h1 className="signup-login-title">
-          {isSignup ? 'SIGN UP' : 'LOGIN'}
-        </h1>
-        <form onSubmit={handleSubmit} className="signup-login-form">
+        <h1 className="signup-login-title">LOGIN</h1>
+        
+        <form onSubmit={handleLoginSubmit} className="signup-login-form">
           <div className="signup-login-input-group">
             <label htmlFor="email" className="signup-login-label">
               Email
@@ -37,6 +41,7 @@ const SignupLoginPage = () => {
               required
             />
           </div>
+          
           <div className="signup-login-input-group">
             <label htmlFor="password" className="signup-login-label">
               Password
@@ -50,27 +55,17 @@ const SignupLoginPage = () => {
               required
             />
           </div>
+          
           <button
             type="submit"
             className="signup-login-submit-button"
           >
-            {isSignup ? 'Sign Up' : 'Log In'}
+            Log In
           </button>
         </form>
-        <div className="signup-login-toggle">
-          <button
-            type="button"
-            onClick={toggleSignup}
-            className="signup-login-toggle-button"
-          >
-            {isSignup
-              ? 'Already have an account? Log In'
-              : "Don't have an account? Sign Up"}
-          </button>
-        </div>
       </div>
     </div>
   );
 };
 
-export default SignupLoginPage;
+export default LoginPage;

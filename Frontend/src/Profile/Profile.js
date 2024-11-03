@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faHome,
@@ -12,14 +12,47 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import astro from "./profile-new.png";
 import './Profile.css';
+import { useNavigate } from 'react-router-dom';
+import { Auth,db } from '../Firebase/FirebaseAuth';
+import {doc, getDoc, setDoc} from "firebase/firestore";
 import def from './default-profile.jpeg';
 
 const ProfileDashboard = () => {
     const [profilePicture, setProfilePicture] = useState(def); // Placeholder profile image
-    const [username] = useState('John Doe'); // Static username for now
-    const [email] = useState('johndoe@example.com'); // Static email for now
+    const newer = {
+      Username: 'JohnDee',
+      email : 'johnexample@gmail.com'
+    }
+    const navigate = useNavigate();
+    const [userDetails, setUserdetails] = useState(newer);
     const [currency] = useState(100); // Example currency amount
     const [datasets] = useState(['Dataset 1', 'Dataset 2', 'Dataset 3']); // Sample datasets
+
+
+    const fetchUserData = async () => {
+      Auth.onAuthStateChanged(async (user) => {
+        
+        const docRef = doc(db,"Users",user.uid);
+        const docsnap = await getDoc(docRef);
+        if(docsnap.exists()){
+          setUserdetails(docsnap.data());
+          console.log(docsnap.data());
+        }else{
+          alert("User is not logged in !");
+        }
+      })
+    }
+    
+    async function handleLogout() {
+      try{
+        await Auth.signOut();
+        alert("User logged out"); 
+        navigate('/login');
+      }
+      catch(error){
+        alert(error.message);
+      }
+    }
 
     const handleProfilePictureChange = (event) => {
         const file = event.target.files[0]; // Get the selected file
@@ -31,6 +64,12 @@ const ProfileDashboard = () => {
             reader.readAsDataURL(file); // Read the file as a data URL
         }
     };
+
+  useEffect(()=>{
+    fetchUserData();
+  },[]);
+
+
   const sidebarLinks = [
     { name: 'Home', icon: faHome, active: false },
     { name: 'Competition', icon: faTrophy, active: false },
@@ -77,12 +116,12 @@ const ProfileDashboard = () => {
                         <div className="info-item">
                             <FontAwesomeIcon icon={faUser} className="icon" />
                             <span className="label">Username:</span>
-                            <span>{username}</span>
+                            <span>{userDetails.Username}</span>
                         </div>
                         <div className="info-item">
                             <FontAwesomeIcon icon={faEnvelope} className="icon" />
                             <span className="label">Email:</span>
-                            <span>{email}</span>
+                            <span>{userDetails.email}</span>
                         </div>
                         <div className="info-item">
                             <FontAwesomeIcon icon={faCoins} className="icon" style={{ color: 'yellow' }} />
