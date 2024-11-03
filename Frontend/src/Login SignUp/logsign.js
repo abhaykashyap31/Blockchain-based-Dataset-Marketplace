@@ -21,7 +21,7 @@ const SignupLoginPage = () => {
     <div className="signup-login-container">
       <div className="signup-login-card">
         <h1 className="signup-login-title">
-          {isSignup ? 'Sign Up' : 'Log In'}
+          {isSignup ? 'SIGN UP' : 'LOGIN'}
         </h1>
         <form onSubmit={handleSubmit} className="signup-login-form">
           <div className="signup-login-input-group">

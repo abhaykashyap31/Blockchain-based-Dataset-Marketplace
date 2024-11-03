@@ -7,8 +7,26 @@
     background-size: cover;
   }
   
+  label{
+    color:#121212;
+    font-size: larger;
+    font-weight: 600;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  h1.signup-login-title {
+    color:#121212;
+    padding-bottom: 30px;
+    margin-left:40%;
+    font-size:x-large;
+    font-weight: 600;
+    font-family: 'Courier New', Courier, monospace;
+
+  }
+
   .signup-login-card {
-    background-color: #fff;
+    background: rgba(255, 255, 255, 0.8);  /* Translucent white background */
+    backdrop-filter: blur(0px);  /* Blur effect for elements behind the card */
+    -webkit-backdrop-filter: blur(10px);  /* For Safari support */
     padding: 2rem;
     border-radius: 0.5rem;
     width: 100%;

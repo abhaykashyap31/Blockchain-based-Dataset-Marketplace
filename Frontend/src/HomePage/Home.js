@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Link, BrowserRouter as Router} from "react-router-dom";
+import {Link,useNavigate} from "react-router-dom";
 import "./Home.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faBars, faTimes, faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -11,6 +11,7 @@ import doc from "./robodoc.jpeg";
 const HomePage = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [menuOpen, setMenuOpen] = useState(false);
+    const navigate = useNavigate();
 
     const handleSearch = () => {
         console.log("Searching for:", searchQuery);
@@ -18,6 +19,10 @@ const HomePage = () => {
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
+    };
+ 
+    const handleSignIn = () => {
+        navigate('/sign-in');  // Navigate to sign-in page
     };
 
     return (
@@ -34,9 +39,7 @@ const HomePage = () => {
                         <li><Link to="/discussions">Discussions</Link></li>
                         <li><Link to="/profile">Profile</Link></li>
                     </ul>
-                    <Link to="/login">
-                        <button className="sign-in">SIGN IN</button>
-                    </Link>
+                        <button className="sign-in"onClick={handleSignIn}>SIGN IN</button>
                 </nav>
             </header>
             <section className="hero">
