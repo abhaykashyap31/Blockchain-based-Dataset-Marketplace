@@ -7,8 +7,6 @@ import {
   faComments,
   faUser,
   faSearch,
-  faThumbsUp,
-  faDownload 
 } from '@fortawesome/free-solid-svg-icons';
 import astro from "./compete2.png";
 import './compete.css';
@@ -117,12 +115,10 @@ const mockPage = () => {
                 <p className="competition-description">{competition.description}</p>
                 <div className="competition-footer">
                   <div className="team-info">
-                    <FontAwesomeIcon icon={faThumbsUp} className="team-icon" />
                     <span>{competition.teams}</span>
                   </div>
                   <button className="join-button">
-                    <FontAwesomeIcon icon={faDownload} className="join-icon" />
-                    Join Competition
+                    Join 
                   </button>
                 </div>
               </div>
