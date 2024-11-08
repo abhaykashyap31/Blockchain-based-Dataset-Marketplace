@@ -25,6 +25,10 @@ const HomePage = () => {
         navigate('/sign-in');  // Navigate to sign-in page
     };
 
+    const SeeAll = () => {
+        navigate('/competition');  // Navigate to sign-in page
+    };
+
     return (
             <div>    
             <header>
@@ -34,7 +38,7 @@ const HomePage = () => {
                         <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
                     </div>
                     <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
-                        <li><Link to="/competitions">Competitions</Link></li>
+                        <li><Link to="/competition">Competitions</Link></li>
                         <li><Link to="/datasets">Datasets</Link></li>
                         <li><Link to="/discussions">Discussions</Link></li>
                         <li><Link to="/profile">Profile</Link></li>
@@ -83,7 +87,7 @@ const HomePage = () => {
                     </div>
                     {/* Add more competition cards as needed */}
                 </div>
-                <button className="see-all">
+                <button className="see-all" onClick = {() => SeeAll()}>
                     See All
                     <FontAwesomeIcon icon={faArrowRight} />
                 </button>

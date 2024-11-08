@@ -11,6 +11,7 @@ import {
   faThumbsUp,
   faDownload 
 } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 import astro from "./earth.png";
 import './Datasets.css';
 
@@ -22,6 +23,8 @@ const DatasetsPage = () => {
     { name: 'Discussions', icon: faComments, active: false },
     { name: 'Profile', icon: faUser, active: false }
   ];
+
+  const navigate = useNavigate();
 
   const datasets = [
     {
@@ -42,6 +45,12 @@ const DatasetsPage = () => {
     }
   ];
 
+  const handleNavigation = (linkName) => {
+    const path = `/${linkName.toLowerCase()}`; // Navigate to the lowercase version of linkName
+    navigate(path);
+  };
+
+
   return (
     <div className="container">
       {/* Fixed Sidebar */}
@@ -51,6 +60,7 @@ const DatasetsPage = () => {
             <button
               key={link.name}
               className={`sidebar-link ${link.active ? 'active' : ''}`}
+              onClick={() => handleNavigation(link.name)}
             >
               <FontAwesomeIcon icon={link.icon} className="sidebar-icon" />
               {link.name}

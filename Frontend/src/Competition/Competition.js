@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faHome,
@@ -11,7 +12,7 @@ import {
 import astro from "./compete2.png";
 import './compete.css';
 
-const mockPage = () => {
+const Compete = () => {
   const sidebarLinks = [
     { name: 'Home', icon: faHome, active: false },
     { name: 'Competition', icon: faTrophy, active: false },
@@ -19,6 +20,7 @@ const mockPage = () => {
     { name: 'Discussions', icon: faComments, active: false },
     { name: 'Profile', icon: faUser, active: false }
   ];
+  const navigate = useNavigate();
 
   const competitions = [
     {
@@ -50,6 +52,12 @@ const mockPage = () => {
     }
   ];
 
+  const handleNavigation = (linkName) => {
+    const path = `/${linkName.toLowerCase()}`; // Navigate to the lowercase version of linkName
+    navigate(path);
+  };
+
+
   return (
     <div className="container">
       {/* Fixed Sidebar */}
@@ -59,6 +67,7 @@ const mockPage = () => {
             <button
               key={link.name}
               className={`sidebar-link ${link.active ? 'active' : ''}`}
+              onClick={() => handleNavigation(link.name)}
             >
               <FontAwesomeIcon icon={link.icon} className="sidebar-icon" />
               {link.name}
@@ -130,4 +139,4 @@ const mockPage = () => {
   );
 };
 
-export default mockPage;
+export default Compete;

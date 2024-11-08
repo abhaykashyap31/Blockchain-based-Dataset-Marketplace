@@ -12,12 +12,12 @@ function App() {
     <>
     <Router>
       <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/home" element={<HomePage />} />
       <Route path="/datasets" element={<DatasetsPage />} />
       <Route path="/profile" element={<ProfileDashboard/>} />
-      <Route path="/sign-in" element={<SignupPage/>} />
+      <Route path="/" element={<SignupPage/>} />
       <Route path="/login" element={<LoginPage/>} />
-      <Route path="/competitions" element={<Compete/>} />
+      <Route path="/competition" element={<Compete/>} />
     </Routes>
     </Router>
     </>

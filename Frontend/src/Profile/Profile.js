@@ -14,7 +14,7 @@ import astro from "./profile-new.png";
 import './Profile.css';
 import { useNavigate } from 'react-router-dom';
 import { Auth,db } from '../Firebase/FirebaseAuth';
-import {doc, getDoc, setDoc} from "firebase/firestore";
+import {doc, getDoc} from "firebase/firestore";
 import def from './default-profile.jpeg';
 
 const ProfileDashboard = () => {
@@ -78,6 +78,11 @@ const ProfileDashboard = () => {
     { name: 'Profile', icon: faUser, active: false }
   ];
 
+  const handleNavigation = (linkName) => {
+    const path = `/${linkName.toLowerCase()}`; // Navigate to the lowercase version of linkName
+    navigate(path);
+  };
+
 
   return (
     <div className="container">
@@ -88,6 +93,7 @@ const ProfileDashboard = () => {
             <button
               key={link.name}
               className={`sidebar-link ${link.active ? 'active' : ''}`}
+              onClick={() => handleNavigation(link.name)}
             >
               <FontAwesomeIcon icon={link.icon} className="sidebar-icon" />
               {link.name}
