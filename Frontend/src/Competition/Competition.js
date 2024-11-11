@@ -30,7 +30,7 @@ const Compete = () => {
       title: 'House Price Prediction Challenge',
       description: 'Predict house prices using advanced regression techniques',
       teams: '1,234 teams',
-      imageUrl: '/api/placeholder/400/200'
+      imageUrl: 'https://clovermortgage.ca/media/images/iStock-1309180566-min.width-1024.jpg'
     },
     {
       id: 2,
@@ -39,7 +39,7 @@ const Compete = () => {
       title: 'Natural Language Processing',
       description: 'Develop models for sentiment analysis on social media',
       teams: '2,567 teams',
-      imageUrl: '/api/placeholder/400/200'
+      imageUrl: 'https://th.bing.com/th/id/OIP.MsfVMY1muy4moxu0WKwCSwHaEH?rs=1&pid=ImgDetMain'
     },
     {
       id: 3,
@@ -48,7 +48,7 @@ const Compete = () => {
       title: 'Computer Vision Challenge',
       description: 'Object detection in autonomous driving scenarios',
       teams: '1,890 teams',
-      imageUrl: '/api/placeholder/400/200'
+      imageUrl: 'https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/blogs/22606/images/e2d450-1f8c-e71-2316-f27bc3f8622_TheGioiMayChu-Blog-Computer-Vision.jpeg'
     }
   ];
 

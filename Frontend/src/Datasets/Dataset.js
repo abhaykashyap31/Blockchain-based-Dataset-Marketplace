@@ -33,7 +33,7 @@ const DatasetsPage = () => {
       description: 'A comprehensive dataset for image classification tasks',
       upvotes: 234,
       downloads: 1500,
-      imageUrl: '/api/placeholder/300/200'
+      imageUrl: 'https://uploads-ssl.webflow.com/614c82ed388d53640613982e/635b9f200bda3dcee9e1700e_6320786193e491309ee5b99b_image-classification-vs.-object-detection.png'
     },
     {
       id: 2,
@@ -41,7 +41,7 @@ const DatasetsPage = () => {
       description: 'Large-scale text corpus for NLP tasks',
       upvotes: 189,
       downloads: 980,
-      imageUrl: '/api/placeholder/300/200'
+      imageUrl: 'https://th.bing.com/th/id/OIP.MsfVMY1muy4moxu0WKwCSwHaEH?rs=1&pid=ImgDetMain'
     }
   ];
 

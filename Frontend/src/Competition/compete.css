@@ -4,8 +4,12 @@
     color: #f7fafc; /* Tailwind text-gray-100 */
     min-height: 100vh;
 }
-
-
+.competition-image{
+    margin-bottom:4px;
+}
+.competition-header{
+    margin-top:3px;
+}
 
 /* Navbar styling */
 
