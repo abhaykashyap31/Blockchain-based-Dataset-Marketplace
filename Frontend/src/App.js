@@ -6,6 +6,7 @@ import ProfileDashboard from './Profile/Profile';
 import SignupPage from './Login SignUp/signUp';
 import LoginPage from './Login SignUp/Login';
 import Compete from './Competition/Competition';
+import Mock from './Discussion/mock';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Route path="/" element={<SignupPage/>} />
       <Route path="/login" element={<LoginPage/>} />
       <Route path="/competition" element={<Compete/>} />
+      <Route path="/discussions" element={<Mock/>}/>
     </Routes>
     </Router>
     </>

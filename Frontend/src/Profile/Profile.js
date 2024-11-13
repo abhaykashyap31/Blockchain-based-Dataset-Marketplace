@@ -73,7 +73,7 @@ const ProfileDashboard = () => {
   const sidebarLinks = [
     { name: 'Home', icon: faHome, active: false },
     { name: 'Competition', icon: faTrophy, active: false },
-    { name: 'Model', icon: faCode, active: false },
+    { name: 'Datasets', icon: faCode, active: false },
     { name: 'Discussions', icon: faComments, active: false },
     { name: 'Profile', icon: faUser, active: false }
   ];

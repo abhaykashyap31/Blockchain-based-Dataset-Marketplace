@@ -22,7 +22,7 @@ const HomePage = () => {
     };
  
     const handleSignIn = () => {
-        navigate('/sign-in');  // Navigate to sign-in page
+        navigate('/profile');  // Navigate to sign-in page
     };
 
     const SeeAll = () => {
@@ -43,7 +43,7 @@ const HomePage = () => {
                         <li><Link to="/discussions">Discussions</Link></li>
                         <li><Link to="/profile">Profile</Link></li>
                     </ul>
-                        <button className="sign-in"onClick={handleSignIn}>SIGN IN</button>
+                        <button className="sign-in"onClick={handleSignIn}>John</button>
                 </nav>
             </header>
             <section className="hero">
