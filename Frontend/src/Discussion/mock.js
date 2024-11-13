@@ -12,6 +12,9 @@ import {
 import discuss from './discuss2.webp';
 import './discuss.css';
 
+// Import the JSON data (ensure the path is correct)
+import discussionsData from '../article.json';
+
 const Mock = () => {
   const sidebarLinks = [
     { name: 'Home', icon: faHome, active: false },
@@ -23,79 +26,66 @@ const Mock = () => {
 
   const navigate = useNavigate();
 
-  const initialDiscussions = [
-    {
-        id: 1,
-        title: "Best approach for time series forecasting?",
-        author: "data_explorer",
-        time: "2 hours ago",
-        comments: 23,
-        views: 142,
-        content: "I'm working on a project that requires forecasting daily sales data. What's the current best practice? SARIMA, Prophet, or neural networks?",
-        tags: ["time-series", "forecasting", "machine-learning"],
-        timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000)
-    },
-    {
-        id: 2,
-        title: "Tips for optimizing XGBoost parameters?",
-        author: "ml_enthusiast",
-        time: "5 hours ago",
-        comments: 15,
-        views: 98,
-        content: "Looking for advice on tuning XGBoost hyperparameters for a classification task. Any systematic approaches?",
-        tags: ["xgboost", "parameters", "optimization"],
-        timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000)
-    },
-    {
-        id: 3,
-        title: "Neural Network Architecture for Image Classification",
-        author: "deep_learner",
-        time: "10 minutes ago",
-        comments: 0,
-        views: 12,
-        content: "Working on a custom CNN architecture. Would love some feedback on the layer configuration.",
-        tags: ["deep-learning", "CNN", "architecture"],
-        timestamp: new Date(Date.now() - 10 * 60 * 1000)
-    },
-    {
-        id: 4,
-        title: "Data Preprocessing Best Practices",
-        author: "data_ninja",
-        time: "1 day ago",
-        comments: 45,
-        views: 523,
-        content: "What are your go-to techniques for handling missing data and outliers?",
-        tags: ["preprocessing", "data-cleaning", "best-practices"],
-        timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000)
+  const [discussions, setDiscussions] = useState([]);
+  const [filter, setFilter] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Function to parse time (e.g., "2 hours ago", "1 day ago")
+  const parseTime = (timeString) => {
+    const timePattern = /(\d+)\s*(hour|day|week|month)s?\s*ago/;
+    const match = timeString.match(timePattern);
+    
+    if (match) {
+      const value = parseInt(match[1], 10);
+      const unit = match[2];
+
+      const now = new Date();
+      if (unit === 'hour') now.setHours(now.getHours() - value);
+      else if (unit === 'day') now.setDate(now.getDate() - value);
+      else if (unit === 'week') now.setDate(now.getDate() - value * 7);
+      else if (unit === 'month') now.setMonth(now.getMonth() - value);
+
+      return now.getTime();
     }
-];
-
-const [discussions, setDiscussions] = useState(initialDiscussions);
-const [filter, setFilter] = useState('all');
-const [searchTerm, setSearchTerm] = useState('');
-
-const filteredDiscussions = discussions
-    .filter(discussion => {
-        if (filter === 'recent') return true;
-        if (filter === 'most-viewed') return true;
-        if (filter === 'no-replies') return discussion.comments === 0;
-        return true;
-    })
-    .filter(discussion => {
-        const lowerSearchTerm = searchTerm.toLowerCase();
-        return (
-            discussion.title.toLowerCase().includes(lowerSearchTerm) ||
-            discussion.content.toLowerCase().includes(lowerSearchTerm) ||
-            discussion.tags.some(tag => tag.toLowerCase().includes(lowerSearchTerm))
-        );
-    });
-
-
-  const handleNavigation = (linkName) => {
-    const path = `/${linkName.toLowerCase()}`; // Navigate to the lowercase version of linkName
-    navigate(path);
+    return 0; // Return 0 if time format is unrecognized
   };
 
+  // Fetch discussions on component mount
+  useEffect(() => {
+    setDiscussions(discussionsData); // Set discussions from the JSON file
+  }, []);
+
+  // Filter and sort discussions
+  const filteredDiscussions = discussions
+    .filter(discussion => {
+      // Filter based on discussion type (recent, most-viewed, no-replies)
+      if (filter === 'recent') return true;
+      if (filter === 'most-viewed') return true;
+      if (filter === 'no-replies') return discussion.comments === 0;
+      return true;
+    })
+    .filter(discussion => {
+      const lowerSearchTerm = searchTerm.toLowerCase();
+      // Ensure title, content, and tags exist before applying toLowerCase
+      return (
+        (discussion.title && discussion.title.toLowerCase().includes(lowerSearchTerm)) ||
+        (discussion.content && discussion.content.toLowerCase().includes(lowerSearchTerm)) ||
+        (discussion.tags && discussion.tags.some(tag => tag.toLowerCase().includes(lowerSearchTerm)))
+      );
+    })
+    .sort((a, b) => {
+      if (filter === 'most-viewed') {
+        return b.views - a.views; // Sort by views descending
+      } else if (filter === 'recent') {
+        return parseTime(b.time) - parseTime(a.time); // Sort by date (most recent first)
+      }
+      return 0; // No sorting for 'all' filter
+    });
+
+  const handleNavigation = (linkName) => {
+    const path = `/${linkName.toLowerCase()}`;
+    navigate(path);
+  };
 
   return (
     <div className="container">
@@ -118,81 +108,84 @@ const filteredDiscussions = discussions
       {/* Main content */}
       <div className="main-content">
         {/* Header and Search */}
-       
         <div className="header-section">
-  <div className="title-wrapper">
-          <div className="earth">
-            <img src={discuss} alt="Data Science Illustration" />
+          <div className="title-wrapper">
+            <div className="earth">
+              <img src={discuss} alt="Data Science Illustration" />
+            </div>
+            <h1 className="page-title">Discussions</h1>
           </div>
-          <h1 className="page-title">Discussions</h1>
+
+          {/* Search and Filter Section */}
+          <div className="search-section">
+            <div className="search-container">
+              <FontAwesomeIcon icon={faSearch} className="search-icon" />
+              <input 
+                type="text"
+                placeholder="Search Discussions..." 
+                className="search-input"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <button className="filter-button">New Discussion</button>
+          </div>
         </div>
 
-        {/* Search and Filter Section */}
-        <div className="search-section">
-          <div className="search-container">
-            <FontAwesomeIcon icon={faSearch} className="search-icon" />
-            <input 
-              type="text"
-              placeholder="Search Articles..." 
-              className="search-input"
-            />   
+        {/* Filters */}
+        <div className="filters">
+          {['all', 'recent', 'most-viewed', 'no-replies'].map((btnFilter) => (
+            <button
+              key={btnFilter}
+              className={`filter-btn ${filter === btnFilter ? 'active' : ''}`}
+              onClick={() => setFilter(btnFilter)}
+            >
+              {btnFilter.replace('-', ' ').charAt(0).toUpperCase() + btnFilter.replace('-', ' ').slice(1)}
+            </button>
+          ))}
         </div>
-        <button className="filter-button">
-            New Discussion
-          </button>
+
+        {/* Display Discussions */}
+        <div className="discussion-list">
+          {filteredDiscussions.length > 0 ? (
+            filteredDiscussions.map((discussion) => (
+              <div className="discussion-card" key={discussion.id}>
+                <div className="discussion-header">
+                  <div>
+                    <h3 className="discussion-title">{discussion.title}</h3>
+                    <div className="discussion-meta">
+                      <span>Started by @{discussion.author}</span>
+                      <span>{discussion.time}</span>
+                    </div>
+                  </div>
+                  <div className="stats">
+                    <div className="stat">
+                      <i className="fas fa-comment"></i>
+                      <span>{discussion.comments}</span>
+                    </div>
+                    <div className="stat">
+                      <i className="fas fa-eye"></i>
+                      <span>{discussion.views}</span>
+                    </div>
+                  </div>
+                </div>
+                <p>{discussion.content}</p>
+                <div className="tags">
+                  {discussion.tags.map((tag, index) => (
+                    <span className="tag" key={index}>{tag}</span>
+                  ))}
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="no-discussions">
+              <i className="fas fa-comments" style={{ fontSize: '2rem', marginBottom: '1rem' }}></i>
+              <p>No discussions found</p>
+            </div>
+          )}
         </div>
       </div>
-      <div className="filters">
-                {['all', 'recent', 'most-viewed', 'no-replies'].map((btnFilter) => (
-                    <button
-                        key={btnFilter}
-                        className={`filter-btn ${filter === btnFilter ? 'active' : ''}`}
-                        onClick={() => setFilter(btnFilter)}
-                    >
-                        {btnFilter.replace('-', ' ').charAt(0).toUpperCase() + btnFilter.replace('-', ' ').slice(1)}
-                    </button>
-                ))}
-            </div>
-
-            <div className="discussion-list">
-                {filteredDiscussions.length > 0 ? (
-                    filteredDiscussions.map((discussion) => (
-                        <div className="discussion-card" key={discussion.id}>
-                            <div className="discussion-header">
-                                <div>
-                                    <h3 className="discussion-title">{discussion.title}</h3>
-                                    <div className="discussion-meta">
-                                        <span>Started by @{discussion.author}</span>
-                                        <span>{discussion.time}</span>
-                                    </div>
-                                </div>
-                                <div className="stats">
-                                    <div className="stat">
-                                        <i className="fas fa-comment"></i>
-                                        <span>{discussion.comments}</span>
-                                    </div>
-                                    <div className="stat">
-                                        <i className="fas fa-eye"></i>
-                                        <span>{discussion.views}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <p>{discussion.content}</p>
-                            <div className="tags">
-                                {discussion.tags.map((tag, index) => (
-                                    <span className="tag" key={index}>{tag}</span>
-                                ))}
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    <div className="no-discussions">
-                        <i className="fas fa-comments" style={{ fontSize: '2rem', marginBottom: '1rem' }}></i>
-                        <p>No discussions found</p>
-                    </div>
-                )}
-            </div>
-        </div></div>
+    </div>
   );
 };
 

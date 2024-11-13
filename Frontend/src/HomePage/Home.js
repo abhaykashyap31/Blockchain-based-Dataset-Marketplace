@@ -6,12 +6,49 @@ import { faSearch, faBars, faTimes, faArrowRight } from '@fortawesome/free-solid
 import astro from './astro1.png';
 import cv from "./cvision.jpeg";
 import graph from "./finance.jpeg";
-import doc from "./robodoc.jpeg";
+import doct from "./robodoc.jpeg";
+import { Auth,db } from '../Firebase/FirebaseAuth';
+import {doc, getDoc} from "firebase/firestore";
 
 const HomePage = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [menuOpen, setMenuOpen] = useState(false);
     const navigate = useNavigate();
+    const newer = {
+        Username: 'JohnDee',
+        email : 'johnexample@gmail.com'
+      }
+    const [userDetails, setUserdetails] = useState(newer);
+
+    function getInitials(name) {
+        const firstName = name.split(' ')[0];
+        return firstName.charAt(0).toUpperCase();
+      }
+
+      const fetchUserData = async () => {
+        Auth.onAuthStateChanged(async (user) => {
+          
+          const docRef = doc(db,"Users",user.uid);
+          const docsnap = await getDoc(docRef);
+          if(docsnap.exists()){
+            setUserdetails(docsnap.data());
+            console.log(docsnap.data());
+          }else{
+            alert("User is not logged in !");
+          }
+        })
+      }
+      
+      async function handleLogout() {
+        try{
+          await Auth.signOut();
+          alert("User logged out"); 
+          navigate('/login');
+        }
+        catch(error){
+          alert(error.message);
+        }
+      }
 
     const handleSearch = () => {
         console.log("Searching for:", searchQuery);
@@ -43,7 +80,7 @@ const HomePage = () => {
                         <li><Link to="/discussions">Discussions</Link></li>
                         <li><Link to="/profile">Profile</Link></li>
                     </ul>
-                        <button className="sign-in"onClick={handleSignIn}>John</button>
+                        <button className="sign-in">Welcome</button>
                 </nav>
             </header>
             <section className="hero">
@@ -71,7 +108,7 @@ const HomePage = () => {
                 <h2>Featured Competitions</h2>
                 <div className="competition-grid">
                     <div className="competition-card">
-                        <img src={doc} alt="AI in Healthcare" className="competition-image" />
+                        <img src={doct} alt="AI in Healthcare" className="competition-image" />
                         <h3>AI in Healthcare</h3>
                         <p>Solve challenges related to healthcare using AI</p>
                     </div>

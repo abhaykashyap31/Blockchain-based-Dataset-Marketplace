@@ -7,9 +7,9 @@ import {
   faComments,
   faUser,
   faSearch,
-  faFilter,
   faThumbsUp,
-  faDownload 
+  faDownload, 
+  faUpload
 } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import astro from "./earth.png";
@@ -92,8 +92,8 @@ const DatasetsPage = () => {
             />
           </div>
           <button className="filter-button">
-            <FontAwesomeIcon icon={faFilter} className="filter-icon" />
-            Filters
+            <FontAwesomeIcon icon={faUpload} className="filter-icon" />
+            Upload
           </button>
         </div>
       </div>
