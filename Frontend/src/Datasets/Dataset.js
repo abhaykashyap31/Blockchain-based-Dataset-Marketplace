@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
+import {
   faHome,
   faTrophy,
   faCode,
@@ -8,11 +8,12 @@ import {
   faUser,
   faSearch,
   faThumbsUp,
-  faDownload, 
+  faDownload,
   faUpload
 } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import astro from "./earth.png";
+import datasetsData from './datasets.json';
 import './Datasets.css';
 
 const DatasetsPage = () => {
@@ -25,35 +26,27 @@ const DatasetsPage = () => {
   ];
 
   const navigate = useNavigate();
+  const [datasets, setDatasets] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const datasets = [
-    {
-      id: 1,
-      title: 'Image Classification Dataset',
-      description: 'A comprehensive dataset for image classification tasks',
-      upvotes: 234,
-      downloads: 1500,
-      imageUrl: 'https://uploads-ssl.webflow.com/614c82ed388d53640613982e/635b9f200bda3dcee9e1700e_6320786193e491309ee5b99b_image-classification-vs.-object-detection.png'
-    },
-    {
-      id: 2,
-      title: 'Natural Language Dataset',
-      description: 'Large-scale text corpus for NLP tasks',
-      upvotes: 189,
-      downloads: 980,
-      imageUrl: 'https://th.bing.com/th/id/OIP.MsfVMY1muy4moxu0WKwCSwHaEH?rs=1&pid=ImgDetMain'
-    }
-  ];
+  // Load datasets from JSON file on component mount
+  useEffect(() => {
+    setDatasets(datasetsData);
+  }, []);
 
   const handleNavigation = (linkName) => {
-    const path = `/${linkName.toLowerCase()}`; // Navigate to the lowercase version of linkName
+    const path = `/${linkName.toLowerCase()}`;
     navigate(path);
   };
 
+  // Filter datasets based on search term
+  const filteredDatasets = datasets.filter((dataset) =>
+    dataset.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    dataset.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="container">
-      {/* Fixed Sidebar */}
       <div className="sidebar">
         <div className="sidebar-links">
           {sidebarLinks.map((link) => (
@@ -69,39 +62,35 @@ const DatasetsPage = () => {
         </div>
       </div>
 
-      {/* Main content */}
       <div className="main-content">
-        {/* Header and Search */}
-       
         <div className="header-section">
-  <div className="title-wrapper">
-          <div className="earth">
-            <img src={astro} alt="Data Science Illustration" />
+          <div className="title-wrapper">
+            <div className="earth">
+              <img src={astro} alt="Data Science Illustration" />
+            </div>
+            <h1 className="page-title">Datasets</h1>
           </div>
-          <h1 className="page-title">Datasets</h1>
+
+          <div className="search-section">
+            <div className="search-container">
+              <FontAwesomeIcon icon={faSearch} className="search-icon" />
+              <input 
+                type="text"
+                placeholder="Search datasets..." 
+                className="search-input"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <button className="filter-button">
+              <FontAwesomeIcon icon={faUpload} className="filter-icon" />
+              Upload
+            </button>
+          </div>
         </div>
 
-        {/* Search and Filter Section */}
-        <div className="search-section">
-          <div className="search-container">
-            <FontAwesomeIcon icon={faSearch} className="search-icon" />
-            <input 
-              type="text"
-              placeholder="Search datasets..." 
-              className="search-input"
-            />
-          </div>
-          <button className="filter-button">
-            <FontAwesomeIcon icon={faUpload} className="filter-icon" />
-            Upload
-          </button>
-        </div>
-      </div>
-
-
-        {/* Dataset Grid */}
         <div className="dataset-grid">
-          {datasets.map((dataset) => (
+          {filteredDatasets.map((dataset) => (
             <div key={dataset.id} className="dataset-card">
               <img
                 src={dataset.imageUrl}
@@ -124,6 +113,9 @@ const DatasetsPage = () => {
               </div>
             </div>
           ))}
+          {filteredDatasets.length === 0 && (
+            <p className="no-results">No datasets found for "{searchTerm}"</p>
+          )}
         </div>
       </div>
     </div>

@@ -1,72 +1,105 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faHome,
-  faTrophy,
-  faCode,
-  faComments,
-  faUser,
-  faSearch,
-} from '@fortawesome/free-solid-svg-icons';
-import astro from "./compete2.png";
+import { faHome, faTrophy, faCode, faComments, faUser, faSearch } from '@fortawesome/free-solid-svg-icons';
+import astro from './compete2.png';
+import competitionsData from './competition.json';
 import './compete.css';
 
 const Compete = () => {
   const sidebarLinks = [
-    { name: 'Home', icon: faHome, active: false },
-    { name: 'Competition', icon: faTrophy, active: false },
-    { name: 'Datasets', icon: faCode, active: false },
-    { name: 'Discussions', icon: faComments, active: false },
-    { name: 'Profile', icon: faUser, active: false }
+    { name: 'Home', icon: faHome },
+    { name: 'Competition', icon: faTrophy },
+    { name: 'Datasets', icon: faCode },
+    { name: 'Discussions', icon: faComments },
+    { name: 'Profile', icon: faUser }
   ];
   const navigate = useNavigate();
+  
+  const [competitions, setCompetitions] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("All Categories");
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const competitions = [
-    {
-      id: 1,
-      prize: '$25,000',
-      timeLeft: '28 days left',
-      title: 'House Price Prediction Challenge',
-      description: 'Predict house prices using advanced regression techniques',
-      teams: '1,234 teams',
-      imageUrl: 'https://clovermortgage.ca/media/images/iStock-1309180566-min.width-1024.jpg'
-    },
-    {
-      id: 2,
-      prize: '$50,000',
-      timeLeft: '15 days left',
-      title: 'Natural Language Processing',
-      description: 'Develop models for sentiment analysis on social media',
-      teams: '2,567 teams',
-      imageUrl: 'https://th.bing.com/th/id/OIP.MsfVMY1muy4moxu0WKwCSwHaEH?rs=1&pid=ImgDetMain'
-    },
-    {
-      id: 3,
-      prize: '$30,000',
-      timeLeft: '45 days left',
-      title: 'Computer Vision Challenge',
-      description: 'Object detection in autonomous driving scenarios',
-      teams: '1,890 teams',
-      imageUrl: 'https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/blogs/22606/images/e2d450-1f8c-e71-2316-f27bc3f8622_TheGioiMayChu-Blog-Computer-Vision.jpeg'
-    }
-  ];
+  useEffect(() => {
+    setCompetitions(competitionsData);
+  }, []);
+
+  const filteredCompetitions = competitions.filter(comp =>
+    (selectedCategory === "All Categories" || comp.category === selectedCategory) &&
+    (comp.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+     comp.description.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
 
   const handleNavigation = (linkName) => {
-    const path = `/${linkName.toLowerCase()}`; // Navigate to the lowercase version of linkName
-    navigate(path);
+    navigate(`/${linkName.toLowerCase()}`);
   };
 
+  // Open new window with the competition title and upload fields
+  const handleJoinClick = (competition) => {
+    const competitionTitle = competition.title;
+
+    const newWindow = window.open("", "_blank", "width=600,height=400");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>${competitionTitle} - Join Competition</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+            h2 { color: #333; }
+            .error { color: red; }
+            .input-field { margin-top: 10px; }
+            .submit-button { margin-top: 15px; padding: 8px 15px; font-size: 14px; }
+          </style>
+        </head>
+        <body>
+          <h2>${competitionTitle}</h2>
+          <input type="file" accept=".py" id="pyFile" class="input-field" /><br />
+          <span id="pyError" class="error"></span><br />
+          <input type="file" accept=".txt" id="txtFile" class="input-field" /><br />
+          <span id="txtError" class="error"></span><br />
+          <button id="submitBtn" class="submit-button" disabled>Submit</button>
+          <script>
+            const submitBtn = document.getElementById('submitBtn');
+            let pyFileUploaded = false;
+            let txtFileUploaded = false;
+
+            document.getElementById('pyFile').addEventListener('change', function(e) {
+              const pyFile = e.target.files[0];
+              if (pyFile && pyFile.name.endsWith('.py')) {
+                document.getElementById('pyError').textContent = '';
+                pyFileUploaded = true;
+              } else {
+                document.getElementById('pyError').textContent = 'Invalid file type. Please upload a .py file.';
+                pyFileUploaded = false;
+              }
+              submitBtn.disabled = !(pyFileUploaded && txtFileUploaded);
+            });
+
+            document.getElementById('txtFile').addEventListener('change', function(e) {
+              const txtFile = e.target.files[0];
+              if (txtFile && txtFile.name.endsWith('.txt')) {
+                document.getElementById('txtError').textContent = '';
+                txtFileUploaded = true;
+              } else {
+                document.getElementById('txtError').textContent = 'Invalid file type. Please upload a .txt file.';
+                txtFileUploaded = false;
+              }
+              submitBtn.disabled = !(pyFileUploaded && txtFileUploaded);
+            });
+          </script>
+        </body>
+      </html>
+    `);
+  };
 
   return (
     <div className="container">
-      {/* Fixed Sidebar */}
       <div className="sidebar">
         <div className="sidebar-links">
           {sidebarLinks.map((link) => (
             <button
               key={link.name}
-              className={`sidebar-link ${link.active ? 'active' : ''}`}
+              className="sidebar-link"
               onClick={() => handleNavigation(link.name)}
             >
               <FontAwesomeIcon icon={link.icon} className="sidebar-icon" />
@@ -76,28 +109,31 @@ const Compete = () => {
         </div>
       </div>
 
-      {/* Main content */}
       <div className="main-content">
-        {/* Header and Search */}
         <div className="header-section">
           <div className="title-wrapper">
             <div className="earth">
-            <img src={astro} alt="Data Science Illustration" />
+              <img src={astro} alt="Data Science Illustration" />
             </div>
             <h1 className="page-title">Competitions</h1>
           </div>
 
-          {/* Search and Filter Section */}
           <div className="search-section">
             <div className="search-container">
               <FontAwesomeIcon icon={faSearch} className="search-icon" />
               <input 
-                type="text"
+                type="text" 
                 placeholder="Search competitions..." 
-                className="search-input"
+                className="search-input" 
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <select className="select-box">
+            <select
+              className="select-box"
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
               <option>All Categories</option>
               <option>Featured</option>
               <option>Research</option>
@@ -106,15 +142,10 @@ const Compete = () => {
           </div>
         </div>
 
-        {/* Competition Grid */}
         <div className="competition-grid">
-          {competitions.map((competition) => (
+          {filteredCompetitions.map((competition) => (
             <div key={competition.id} className="competition-card">
-              <img
-                src={competition.imageUrl}
-                alt={competition.title}
-                className="competition-image"
-              />
+              <img src={competition.imageUrl} alt={competition.title} className="competition-image" />
               <div className="competition-content">
                 <div className="competition-header">
                   <span className="prize-badge">{competition.prize}</span>
@@ -126,13 +157,14 @@ const Compete = () => {
                   <div className="team-info">
                     <span>{competition.teams}</span>
                   </div>
-                  <button className="join-button">
-                    Join 
-                  </button>
+                  <button className="join-button" onClick={() => handleJoinClick(competition)}>Join</button>
                 </div>
               </div>
             </div>
           ))}
+          {filteredCompetitions.length === 0 && (
+            <p className="no-results">No competitions found for "{searchTerm}"</p>
+          )}
         </div>
       </div>
     </div>

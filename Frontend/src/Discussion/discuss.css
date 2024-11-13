@@ -103,6 +103,7 @@
 .tags {
     display: flex;
     gap: 0.5rem;
+    font-weight: 500;
     margin-top: 1rem;
     flex-wrap: wrap;
 }
@@ -110,7 +111,8 @@
 .stats {
     display: flex;
     gap: 1rem;
-    color: #888;
+    font-weight: 800;
+    color: whitesmoke;
 }
 
 .stat {
