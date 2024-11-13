@@ -19,9 +19,21 @@ const Compete = () => {
   const [competitions, setCompetitions] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
   const [searchTerm, setSearchTerm] = useState("");
+  const [isWideScreen, setIsWideScreen] = useState(window.innerWidth > 700); // Track screen width
 
   useEffect(() => {
     setCompetitions(competitionsData);
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsWideScreen(window.innerWidth > 700); // Update condition for 700px
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const filteredCompetitions = competitions.filter(comp =>
@@ -94,20 +106,22 @@ const Compete = () => {
 
   return (
     <div className="container">
-      <div className="sidebar">
-        <div className="sidebar-links">
-          {sidebarLinks.map((link) => (
-            <button
-              key={link.name}
-              className="sidebar-link"
-              onClick={() => handleNavigation(link.name)}
-            >
-              <FontAwesomeIcon icon={link.icon} className="sidebar-icon" />
-              {link.name}
-            </button>
-          ))}
+      {isWideScreen && ( // Conditional rendering of the entire sidebar based on screen width
+        <div className="sidebar">
+          <div className="sidebar-links">
+            {sidebarLinks.map((link) => (
+              <button
+                key={link.name}
+                className="sidebar-link"
+                onClick={() => handleNavigation(link.name)}
+              >
+                <FontAwesomeIcon icon={link.icon} className="sidebar-icon" />
+                {link.name}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="main-content">
         <div className="header-section">

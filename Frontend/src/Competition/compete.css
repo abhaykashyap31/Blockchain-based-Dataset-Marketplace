@@ -12,7 +12,21 @@
 }
 
 /* Navbar styling */
-
+@media (max-width: 1400px) {
+    .competition-grid {
+      grid-template-columns: 1fr; /* Single column layout */
+    }
+  }
+  
+  /* For screens below 700px, adjust layout for mobile */
+  @media (max-width: 700px) {
+    .sidebar {
+      display: none; /* Hide sidebar on small screens */
+    }
+    .container,.main-content {
+        width: 100%; /* Make the main content take the full width */
+      }
+}
 
 .navbar-container {
     max-width: 1128px; /* Tailwind max-w-7xl */

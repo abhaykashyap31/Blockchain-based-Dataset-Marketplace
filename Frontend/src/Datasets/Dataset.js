@@ -28,10 +28,23 @@ const DatasetsPage = () => {
   const navigate = useNavigate();
   const [datasets, setDatasets] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isWideScreen, setIsWideScreen] = useState(window.innerWidth > 700); // Track screen width
 
   // Load datasets from JSON file on component mount
   useEffect(() => {
     setDatasets(datasetsData);
+  }, []);
+
+  // Listen for window resize events and update the screen width state
+  useEffect(() => {
+    const handleResize = () => {
+      setIsWideScreen(window.innerWidth > 700); // Update condition for 600px
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const handleNavigation = (linkName) => {
@@ -47,20 +60,22 @@ const DatasetsPage = () => {
 
   return (
     <div className="container">
-      <div className="sidebar">
-        <div className="sidebar-links">
-          {sidebarLinks.map((link) => (
-            <button
-              key={link.name}
-              className={`sidebar-link ${link.active ? 'active' : ''}`}
-              onClick={() => handleNavigation(link.name)}
-            >
-              <FontAwesomeIcon icon={link.icon} className="sidebar-icon" />
-              {link.name}
-            </button>
-          ))}
+      {isWideScreen && ( // Conditional rendering of the entire sidebar based on screen width
+        <div className="sidebar">
+          <div className="sidebar-links">
+            {sidebarLinks.map((link) => (
+              <button
+                key={link.name}
+                className={`sidebar-link ${link.active ? 'active' : ''}`}
+                onClick={() => handleNavigation(link.name)}
+              >
+                <FontAwesomeIcon icon={link.icon} className="sidebar-icon" />
+                {link.name}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="main-content">
         <div className="header-section">
