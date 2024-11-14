@@ -1,0 +1,4 @@
+NEO4J_URI=bolt://3.237.63.38
+NEO4J_USERNAME=neo4j
+NEO4J_PASSWORD=circuitry-twenties-sponges
+NEO4J_DATABASE=neo4j

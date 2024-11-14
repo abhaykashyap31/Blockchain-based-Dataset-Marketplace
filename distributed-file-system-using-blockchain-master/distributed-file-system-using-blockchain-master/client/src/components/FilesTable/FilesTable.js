@@ -1,31 +1,22 @@
 import React from 'react';
+import './FilesTable.css';
 
-import './FilesTable.css'
-
-function FilesTable(props) {
-    return (
-        <div className="FilesTable">
-            {/* <h5>
-            Files
-            </h5> */}
-            <table>
-                <thead>
-                <tr>
-                    <th>File</th>
-                    {/* <th>Size</th> */}
-                </tr>
-                </thead>
-                <tbody>
-                {props.files.map((row) => (
-                    <tr>
-                    <td><a href={row.url}>{row.name}</a></td>
-                    {/* <td>{row.size}</td> */}
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-        </div>
-    );
+function FilesTable({ files }) {
+	return (
+		<div className="files-table">
+			{files.map((file, index) => (
+				<div className="file-card" key={index}>
+					{file.image && <img src={file.image} alt={file.name} className="file-image" />}
+					<h3>{file.name}</h3>
+					<p>{file.content}</p>
+					<p><strong>Size:</strong> {file.size}</p>
+					<a href={file.url} target="_blank" rel="noopener noreferrer">
+						Download Dataset
+					</a>
+				</div>
+			))}
+		</div>
+	);
 }
 
 export default FilesTable;

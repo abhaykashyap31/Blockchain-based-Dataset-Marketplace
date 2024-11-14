@@ -1,0 +1,11 @@
+ID,Location,Area (sq ft),Bedrooms,Bathrooms,Parking Spaces,Year Built,Condition,Price
+1,New York,1200,3,2,1,2005,Good,750000
+2,Los Angeles,2500,4,3,2,2010,Excellent,1200000
+3,Chicago,1800,3,2,1,1999,Fair,650000
+4,Houston,2200,4,3,2,2015,Good,900000
+5,San Francisco,1600,3,2,1,2012,Excellent,1150000
+6,Miami,1500,2,2,1,2000,Good,700000
+7,Seattle,2100,3,2,2,2008,Good,950000
+8,Boston,1300,3,1,1,2011,Fair,800000
+9,Dallas,2400,4,3,2,2016,Excellent,1050000
+10,Denver,1700,3,2,1,2009,Good,850000

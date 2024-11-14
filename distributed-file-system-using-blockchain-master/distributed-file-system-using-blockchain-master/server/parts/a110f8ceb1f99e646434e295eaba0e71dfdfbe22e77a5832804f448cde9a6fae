@@ -1,0 +1,11 @@
+Image_ID,Category,Resolution,Color Mode,Label,Date Collected
+1,Animal,1024x768,RGB,Dog,2023-05-10
+2,Plant,800x600,RGB,Tree,2023-05-11
+3,Vehicle,640x480,Grayscale,Car,2023-05-12
+4,Building,1280x720,RGB,House,2023-05-13
+5,Animal,1024x768,RGB,Cat,2023-05-14
+6,Plant,800x600,RGB,Flower,2023-05-15
+7,Vehicle,640x480,Grayscale,Truck,2023-05-16
+8,Building,1280x720,RGB,Skyscraper,2023-05-17
+9,Animal,1024x768,RGB,Bird,2023-05-18
+10,Plant,800x600,RGB,Bush,2023-05-19
