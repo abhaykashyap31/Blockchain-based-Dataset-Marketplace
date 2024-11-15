@@ -335,9 +335,10 @@ body {
   z-index: 1000;
 }
 
-.upload-modal-content {
+.upload-modal-content{
   background-color: white;
   padding: 20px;
+  color: #121212;
   border-radius: 8px;
   width: 400px;
   max-width: 90%;
@@ -347,6 +348,7 @@ body {
 .upload-modal-content h2 {
   margin-bottom: 20px;
   font-size: 24px;
+  color: #121212;
   text-align: center;
 }
 
@@ -357,6 +359,7 @@ body {
 
 .upload-modal-content label {
   font-size: 16px;
+  color:#121212;
   margin: 10px 0 5px;
 }
 
@@ -364,6 +367,14 @@ body {
 .upload-modal-content textarea {
   padding: 10px;
   font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+.upload-modal-content textarea {
+  padding: 10px;
+  font-size: 16px;
+  width: 90%;
   border: 1px solid #ccc;
   border-radius: 4px;
   margin-bottom: 10px;
@@ -377,8 +388,9 @@ body {
 .upload-modal-content button {
   background-color: #4CAF50;
   color: white;
-  padding: 12px 20px;
+  padding: 5px 5px;
   border: none;
+  margin-right: 10px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
@@ -392,7 +404,7 @@ body {
 .upload-modal-content .close-button {
   background-color: #e74c3c;
   color: white;
-  padding: 10px 20px;
+  padding: 5px 5px;
   border: none;
   border-radius: 4px;
   cursor: pointer;

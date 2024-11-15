@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
+import {
   faHome,
   faTrophy,
   faCode,
   faComments,
   faUser,
   faSearch,
+  faComment,
+  faEye
 } from '@fortawesome/free-solid-svg-icons';
 import discuss from './discuss2.webp';
 import './discuss.css';
 
-// Import the JSON data (ensure the path is correct)
+// Import the JSON data
 import discussionsData from '../article.json';
 
 const Mock = () => {
@@ -30,7 +32,6 @@ const Mock = () => {
   const [filter, setFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Function to parse time (e.g., "2 hours ago", "1 day ago")
   const parseTime = (timeString) => {
     const timePattern = /(\d+)\s*(hour|day|week|month)s?\s*ago/;
     const match = timeString.match(timePattern);
@@ -47,18 +48,15 @@ const Mock = () => {
 
       return now.getTime();
     }
-    return 0; // Return 0 if time format is unrecognized
+    return 0;
   };
 
-  // Fetch discussions on component mount
   useEffect(() => {
-    setDiscussions(discussionsData); // Set discussions from the JSON file
+    setDiscussions(discussionsData);
   }, []);
 
-  // Filter and sort discussions
   const filteredDiscussions = discussions
     .filter(discussion => {
-      // Filter based on discussion type (recent, most-viewed, no-replies)
       if (filter === 'recent') return true;
       if (filter === 'most-viewed') return true;
       if (filter === 'no-replies') return discussion.comments === 0;
@@ -66,7 +64,6 @@ const Mock = () => {
     })
     .filter(discussion => {
       const lowerSearchTerm = searchTerm.toLowerCase();
-      // Ensure title, content, and tags exist before applying toLowerCase
       return (
         (discussion.title && discussion.title.toLowerCase().includes(lowerSearchTerm)) ||
         (discussion.content && discussion.content.toLowerCase().includes(lowerSearchTerm)) ||
@@ -75,11 +72,11 @@ const Mock = () => {
     })
     .sort((a, b) => {
       if (filter === 'most-viewed') {
-        return b.views - a.views; // Sort by views descending
+        return b.views - a.views;
       } else if (filter === 'recent') {
-        return parseTime(b.time) - parseTime(a.time); // Sort by date (most recent first)
+        return parseTime(b.time) - parseTime(a.time);
       }
-      return 0; // No sorting for 'all' filter
+      return 0;
     });
 
   const handleNavigation = (linkName) => {
@@ -89,7 +86,7 @@ const Mock = () => {
 
   return (
     <div className="container">
-      {/* Fixed Sidebar */}
+      {/* Sidebar */}
       <div className="sidebar">
         <div className="sidebar-links">
           {sidebarLinks.map((link) => (
@@ -107,7 +104,6 @@ const Mock = () => {
 
       {/* Main content */}
       <div className="main-content">
-        {/* Header and Search */}
         <div className="header-section">
           <div className="title-wrapper">
             <div className="earth">
@@ -160,11 +156,11 @@ const Mock = () => {
                   </div>
                   <div className="stats">
                     <div className="stat">
-                      <i className="fas fa-comment"></i>
+                      <FontAwesomeIcon icon={faComment} />
                       <span>{discussion.comments}</span>
                     </div>
                     <div className="stat">
-                      <i className="fas fa-eye"></i>
+                      <FontAwesomeIcon icon={faEye} />
                       <span>{discussion.views}</span>
                     </div>
                   </div>
@@ -179,7 +175,7 @@ const Mock = () => {
             ))
           ) : (
             <div className="no-discussions">
-              <i className="fas fa-comments" style={{ fontSize: '2rem', marginBottom: '1rem' }}></i>
+              <FontAwesomeIcon icon={faComments} style={{ fontSize: '2rem', marginBottom: '1rem' }} />
               <p>No discussions found</p>
             </div>
           )}
