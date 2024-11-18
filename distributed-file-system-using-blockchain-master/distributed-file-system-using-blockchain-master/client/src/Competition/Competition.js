@@ -49,7 +49,7 @@ const Compete = () => {
   // Open new window with the competition title and upload fields
   const handleJoinClick = (competition) => {
     const competitionTitle = competition.title;
-
+  
     const newWindow = window.open("", "_blank", "width=600,height=400");
     newWindow.document.write(`
       <html>
@@ -74,7 +74,7 @@ const Compete = () => {
             const submitBtn = document.getElementById('submitBtn');
             let pyFileUploaded = false;
             let txtFileUploaded = false;
-
+  
             document.getElementById('pyFile').addEventListener('change', function(e) {
               const pyFile = e.target.files[0];
               if (pyFile && pyFile.name.endsWith('.py')) {
@@ -86,7 +86,7 @@ const Compete = () => {
               }
               submitBtn.disabled = !(pyFileUploaded && txtFileUploaded);
             });
-
+  
             document.getElementById('txtFile').addEventListener('change', function(e) {
               const txtFile = e.target.files[0];
               if (txtFile && txtFile.name.endsWith('.txt')) {
@@ -98,11 +98,16 @@ const Compete = () => {
               }
               submitBtn.disabled = !(pyFileUploaded && txtFileUploaded);
             });
+  
+            submitBtn.addEventListener('click', function() {
+              alert('Submission has been made');
+            });
           </script>
         </body>
       </html>
     `);
   };
+  
 
   return (
     <div className="container">

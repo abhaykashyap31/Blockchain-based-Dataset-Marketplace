@@ -4,7 +4,7 @@ import {
   faHome, faTrophy, faCode, faComments, faUser, faSearch, faDownload, faUpload, faTrash
 } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import astro from "./earth.png";
+import astro from './earth.png';
 import './Datasets.css';
 import axios from 'axios';
 import FormData from 'form-data';
@@ -15,7 +15,7 @@ import { NETWORK_ID, NETWORK_URL, STORJ_IPFS_API_URL, STORJ_IPFS_GATEWAY_URL } f
 const DatasetsPage = () => {
   const navigate = useNavigate();
   const [datasets, setDatasets] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [isWideScreen, setIsWideScreen] = useState(window.innerWidth > 700);
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -27,6 +27,7 @@ const DatasetsPage = () => {
   const [contract, setContract] = useState(null);
   const [account, setAccount] = useState(null);
 
+  // Initialize Web3 and contract
   useEffect(() => {
     const init = async () => {
       const web3 = new Web3(NETWORK_URL);
@@ -40,12 +41,13 @@ const DatasetsPage = () => {
     init();
   }, []);
 
+  // Load datasets from sessionStorage
   useEffect(() => {
     const savedDatasets = JSON.parse(sessionStorage.getItem('datasets')) || [];
-    const userUploadedDatasets = savedDatasets.filter(dataset => dataset.size && dataset.size !== '0 MB');
-    setDatasets(userUploadedDatasets);
+    setDatasets(savedDatasets);
   }, []);
 
+  // Handle screen resize for responsiveness
   useEffect(() => {
     const handleResize = () => {
       setIsWideScreen(window.innerWidth > 700);
@@ -60,8 +62,7 @@ const DatasetsPage = () => {
     if (linkName === 'Upload') {
       setShowUploadModal(true);
     } else {
-      const path = `/${linkName.toLowerCase()}`;
-      navigate(path);
+      navigate(`/${linkName.toLowerCase()}`);
     }
   };
 
@@ -78,58 +79,13 @@ const DatasetsPage = () => {
   };
 
   const handleImageChange = (event) => {
-    setImageFile(event.target.files[0]);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    let data = new FormData();
-    data.append('file', selectedFile);
-    data.append('image', imageFile);
-    data.append('datasetName', datasetName);
-    data.append('datasetContent', datasetContent);
-  
-    try {
-      // Upload dataset file and image to IPFS or STORJ
-      const response = await axios.post(STORJ_IPFS_API_URL, data, {
-        headers: { 'Content-Type': `multipart/form-data; boundary=${data._boundary}` },
-        maxContentLength: Infinity, maxBodyLength: Infinity,
-      });
-      const fileHash = response.data;
-  
-      // Upload metadata to blockchain
-      await contract.methods.addFile(fileHash).send({ from: account, gas: '1000000' });
-  
-      // Construct the new dataset entry with image URL from storage
-      const newFile = {
-        name: datasetName,
-        content: datasetContent,
-        image: `${STORJ_IPFS_GATEWAY_URL}${fileHash}/image`,  // URL to the stored image
-        size: fileSize,
-        url: `${STORJ_IPFS_GATEWAY_URL}${fileHash}`,          // URL to the stored dataset file
-      };
-  
-      // Update the UI with new dataset entry
-      setUploadedFiles([...uploadedFiles, newFile]);
-      const updatedDatasets = [...datasets, newFile];
-      setDatasets(updatedDatasets);
-  
-      // Save datasets with image URLs in sessionStorage
-      sessionStorage.setItem('datasets', JSON.stringify(updatedDatasets));
-  
-      // Reset form fields
-      setDatasetName('');
-      setDatasetContent('');
-      setSelectedFile(null);
-      setImageFile(null);
-      setFileSize('');
-      setShowUploadModal(false);
-    } catch (error) {
-      console.error("Error uploading dataset:", error);
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => setImageFile(reader.result); // Convert to Base64
+      reader.readAsDataURL(file);
     }
   };
-  
-
   const handleDownload = (url) => {
     const a = document.createElement('a');
     a.href = url;
@@ -137,39 +93,66 @@ const DatasetsPage = () => {
     a.click();
   };
 
-  const handleDelete = async (datasetToDelete) => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    let data = new FormData();
+    data.append('file', selectedFile);
+    data.append('datasetName', datasetName);
+    data.append('datasetContent', datasetContent);
+
     try {
-      // Extract file hash from dataset URL (ensure it's unique)
-      const fileHash = datasetToDelete.url.split(STORJ_IPFS_GATEWAY_URL)[1]; // Extract file hash from URL
-      
-      // Call the correct method to remove the file from the contract
-      await contract.methods.deleteFile(fileHash).send({ from: account, gas: '1000000' });
-  
-      // Remove dataset from UI and sessionStorage
-      const updatedDatasets = datasets.filter(dataset => dataset.url !== datasetToDelete.url);
+      // Upload dataset file to IPFS/STORJ
+      const response = await axios.post(STORJ_IPFS_API_URL, data, {
+        headers: { 'Content-Type': `multipart/form-data; boundary=${data._boundary}` },
+        maxContentLength: Infinity, maxBodyLength: Infinity,
+      });
+      const fileHash = response.data;
+
+      // Upload metadata to blockchain
+      await contract.methods.addFile(fileHash).send({ from: account, gas: '1000000' });
+
+      // Construct the new dataset entry
+      const newFile = {
+        name: datasetName,
+        content: datasetContent,
+        size: fileSize,
+        image: imageFile, // Save Base64 image data
+        url: `${STORJ_IPFS_GATEWAY_URL}${fileHash}`, // URL to the dataset file
+      };
+
+      // Update UI and session storage
+      const updatedDatasets = [...datasets, newFile];
       setDatasets(updatedDatasets);
+      setUploadedFiles([...uploadedFiles, newFile]);
       sessionStorage.setItem('datasets', JSON.stringify(updatedDatasets));
-      
+
+      // Reset form
+      setDatasetName('');
+      setDatasetContent('');
+      setSelectedFile(null);
+      setImageFile(null);
+      setFileSize('');
+      setShowUploadModal(false);
     } catch (error) {
-      console.error("Error deleting dataset:", error);
+      console.error('Error uploading dataset:', error);
     }
   };
-  
+
   return (
     <div className="container">
       {isWideScreen && (
         <div className="sidebar">
           <div className="sidebar-links">
             {[ 
-              { name: 'Home', icon: faHome, active: false },
-              { name: 'Competition', icon: faTrophy, active: false },
-              { name: 'Datasets', icon: faCode, active: false },
-              { name: 'Discussions', icon: faComments, active: false },
-              { name: 'Profile', icon: faUser, active: false },
+              { name: 'Home', icon: faHome },
+              { name: 'Competition', icon: faTrophy },
+              { name: 'Datasets', icon: faCode },
+              { name: 'Discussions', icon: faComments },
+              { name: 'Profile', icon: faUser },
             ].map((link) => (
               <button
                 key={link.name}
-                className={`sidebar-link ${link.active ? 'active' : ''}`}
+                className="sidebar-link"
                 onClick={() => handleNavigation(link.name)}
               >
                 <FontAwesomeIcon icon={link.icon} className="sidebar-icon" />
@@ -212,7 +195,8 @@ const DatasetsPage = () => {
         <div className="dataset-grid">
           {filteredDatasets.map((dataset) => (
             <div key={dataset.url} className="dataset-card">
-              <img src={dataset.image} alt={dataset.name} className="dataset-image" />
+              {dataset.image && <img src={dataset.image} alt="Dataset Preview" className="dataset-image" />}
+              {/* Removed image rendering */}
               <div className="dataset-content">
                 <h3 className="dataset-title">{dataset.name}</h3>
                 <p className="dataset-description">{dataset.content}</p>
@@ -226,13 +210,7 @@ const DatasetsPage = () => {
                   <FontAwesomeIcon icon={faDownload} className="download-icon" />
                   Download
                 </button>
-                <button
-                  className="delete-button"
-                  onClick={() => handleDelete(dataset)}
-                >
-                  <FontAwesomeIcon icon={faTrash} className="delete-icon" />
-                  Delete
-                </button>
+
               </div>
             </div>
           ))}
@@ -253,25 +231,29 @@ const DatasetsPage = () => {
                   />
                 </label>
                 <label>
-                  Dataset Description
+                  Dataset Content
                   <textarea
                     value={datasetContent}
                     onChange={(e) => setDatasetContent(e.target.value)}
                     required
-                  />
+                  ></textarea>
                 </label>
                 <label>
                   Dataset File
                   <input type="file" onChange={handleFileChange} required />
                 </label>
                 <label>
-                  Dataset Image (optional)
-                  <input type="file" onChange={handleImageChange} />
+                  Image File (Optional)
+                  <input type="file" accept="image/*" onChange={handleImageChange} />
                 </label>
-                <div className="upload-actions">
-                  <button type="submit" className="submit-button">Upload</button>
-                  <button type="button" className="cancel-button" onClick={() => setShowUploadModal(false)}>Cancel</button>
-                </div>
+                <button type="submit" className="upload-submit">Upload</button>
+                <button
+                  type="button"
+                  className="upload-cancel"
+                  onClick={() => setShowUploadModal(false)}
+                >
+                  Cancel
+                </button>
               </form>
             </div>
           </div>

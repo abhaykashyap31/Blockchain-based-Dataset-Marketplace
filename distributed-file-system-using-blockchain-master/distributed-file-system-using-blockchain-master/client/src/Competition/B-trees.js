@@ -103,13 +103,19 @@ const rl = readline.createInterface({
 });
 
 rl.question("Enter the title to search: ", (searchTitle) => {
+  const startTime = Date.now(); // Start time before search
   const result = bTree.search(searchTitle);
+  const endTime = Date.now(); // End time after search
+
+  const elapsedTime = endTime - startTime; // Calculate elapsed time
 
   if (result) {
     console.log(`Found:`, result);
   } else {
     console.log("Title not found.");
   }
+
+  console.log(`Search time: ${elapsedTime} ms`);
 
   rl.close();
 });

@@ -1,0 +1,11 @@
+Image_ID,Resolution,Color Mode,Region Segment,Class Label,Segmentation Mask Available
+1,512x512,Grayscale,Lung,Nodule,Yes
+2,512x512,RGB,Brain,Tumor,Yes
+3,256x256,Grayscale,Heart,Valve,No
+4,512x512,RGB,Liver,Cyst,Yes
+5,512x512,RGB,Kidney,Stone,No
+6,256x256,Grayscale,Spine,Disc,Yes
+7,512x512,RGB,Eye,Retina,Yes
+8,512x512,Grayscale,Stomach,Ulcer,No
+9,256x256,RGB,Thyroid,Nodule,Yes
+10,512x512,Grayscale,Brain,Hemorrhage,Yes

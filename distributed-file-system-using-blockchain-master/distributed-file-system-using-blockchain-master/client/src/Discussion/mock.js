@@ -28,14 +28,97 @@ const Mock = () => {
 
   const navigate = useNavigate();
 
-  const [discussions, setDiscussions] = useState([]);
+  // Load discussions from localStorage or fallback to JSON data
+  const [discussions, setDiscussions] = useState(() => {
+    const storedDiscussions = localStorage.getItem('discussions');
+    return storedDiscussions ? JSON.parse(storedDiscussions) : discussionsData;
+  });
+
   const [filter, setFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+
+  // Save discussions to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('discussions', JSON.stringify(discussions));
+  }, [discussions]);
+
+  const handleNewDiscussion = () => {
+    const newWindow = window.open('', '_blank', 'width=600,height=400');
+
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>New Discussion</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+            h2 { color: #333; }
+            .input-field { margin: 10px 0; padding: 8px; width: 80%; }
+            .submit-btn { padding: 10px 20px; background-color: #007bff; color: #fff; border: none; cursor: pointer; }
+            .submit-btn:hover { background-color: #0056b3; }
+          </style>
+        </head>
+        <body>
+          <h2>Create a New Discussion</h2>
+          <input type="text" id="title" placeholder="Title" class="input-field" /><br />
+          <textarea id="content" placeholder="Content" rows="5" class="input-field"></textarea><br />
+          <input type="text" id="tags" placeholder="Tags (comma-separated)" class="input-field" /><br />
+          <button id="submit" class="submit-btn">Submit</button>
+          <script>
+            document.getElementById('submit').addEventListener('click', () => {
+              const title = document.getElementById('title').value.trim();
+              const content = document.getElementById('content').value.trim();
+              const tags = document.getElementById('tags').value.split(',').map(tag => tag.trim()).filter(tag => tag);
+
+              if (title && content && tags.length > 0) {
+                window.opener.postMessage(
+                  {
+                    title,
+                    content,
+                    tags,
+                    author: 'current_user', // Replace with actual user if available
+                    time: 'Just now',
+                    comments: 0,
+                    views: 0
+                  },
+                  '*'
+                );
+                window.close();
+              } else {
+                alert('Please fill all fields correctly.');
+              }
+            });
+          </script>
+        </body>
+      </html>
+    `);
+  };
+
+  useEffect(() => {
+    const handleNewDiscussionMessage = (event) => {
+      const newDiscussion = event.data;
+
+      if (newDiscussion && newDiscussion.title && newDiscussion.content) {
+        setDiscussions((prevDiscussions) => [
+          ...prevDiscussions,
+          {
+            id: prevDiscussions.length > 0 ? prevDiscussions[prevDiscussions.length - 1].id + 1 : 51,
+            ...newDiscussion
+          }
+        ]);
+      }
+    };
+
+    window.addEventListener('message', handleNewDiscussionMessage);
+
+    return () => {
+      window.removeEventListener('message', handleNewDiscussionMessage);
+    };
+  }, []);
 
   const parseTime = (timeString) => {
     const timePattern = /(\d+)\s*(hour|day|week|month)s?\s*ago/;
     const match = timeString.match(timePattern);
-    
+
     if (match) {
       const value = parseInt(match[1], 10);
       const unit = match[2];
@@ -51,23 +134,24 @@ const Mock = () => {
     return 0;
   };
 
-  useEffect(() => {
-    setDiscussions(discussionsData);
-  }, []);
+  const handleNavigation = (linkName) => {
+    const path = `/${linkName.toLowerCase()}`;
+    navigate(path);
+  };
 
   const filteredDiscussions = discussions
-    .filter(discussion => {
+    .filter((discussion) => {
       if (filter === 'recent') return true;
       if (filter === 'most-viewed') return true;
       if (filter === 'no-replies') return discussion.comments === 0;
       return true;
     })
-    .filter(discussion => {
+    .filter((discussion) => {
       const lowerSearchTerm = searchTerm.toLowerCase();
       return (
         (discussion.title && discussion.title.toLowerCase().includes(lowerSearchTerm)) ||
         (discussion.content && discussion.content.toLowerCase().includes(lowerSearchTerm)) ||
-        (discussion.tags && discussion.tags.some(tag => tag.toLowerCase().includes(lowerSearchTerm)))
+        (discussion.tags && discussion.tags.some((tag) => tag.toLowerCase().includes(lowerSearchTerm)))
       );
     })
     .sort((a, b) => {
@@ -78,11 +162,6 @@ const Mock = () => {
       }
       return 0;
     });
-
-  const handleNavigation = (linkName) => {
-    const path = `/${linkName.toLowerCase()}`;
-    navigate(path);
-  };
 
   return (
     <div className="container">
@@ -116,15 +195,17 @@ const Mock = () => {
           <div className="search-section">
             <div className="search-container">
               <FontAwesomeIcon icon={faSearch} className="search-icon" />
-              <input 
+              <input
                 type="text"
-                placeholder="Search Discussions..." 
+                placeholder="Search Discussions..."
                 className="search-input"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <button className="filter-button">New Discussion</button>
+            <button className="filter-button" onClick={handleNewDiscussion}>
+              New Discussion
+            </button>
           </div>
         </div>
 
@@ -136,7 +217,8 @@ const Mock = () => {
               className={`filter-btn ${filter === btnFilter ? 'active' : ''}`}
               onClick={() => setFilter(btnFilter)}
             >
-              {btnFilter.replace('-', ' ').charAt(0).toUpperCase() + btnFilter.replace('-', ' ').slice(1)}
+              {btnFilter.replace('-', ' ').charAt(0).toUpperCase() +
+                btnFilter.replace('-', ' ').slice(1)}
             </button>
           ))}
         </div>
@@ -165,18 +247,19 @@ const Mock = () => {
                     </div>
                   </div>
                 </div>
-                <p>{discussion.content}</p>
+                <p className="discussion-body">{discussion.content}</p>
                 <div className="tags">
-                  {discussion.tags.map((tag, index) => (
-                    <span className="tag" key={index}>{tag}</span>
+                  {discussion.tags.map((tag, idx) => (
+                    <span key={idx} className="tag">
+                      {tag}
+                    </span>
                   ))}
                 </div>
               </div>
             ))
           ) : (
-            <div className="no-discussions">
-              <FontAwesomeIcon icon={faComments} style={{ fontSize: '2rem', marginBottom: '1rem' }} />
-              <p>No discussions found</p>
+            <div className="no-results">
+              <h3>No discussions found.</h3>
             </div>
           )}
         </div>

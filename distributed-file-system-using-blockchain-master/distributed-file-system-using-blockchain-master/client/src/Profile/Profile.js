@@ -26,8 +26,8 @@ const ProfileDashboard = () => {
       email: 'johnexample@gmail.com'
     });
     const [currency] = useState(100); // Example currency amount
-    const [ethereumAddress] = useState("0x1234...abcd"); // Placeholder Ethereum address
-    const [contractBalance] = useState("5.0 ETH"); // Placeholder contract balance
+    const [ethereumAddress] = useState("0x87FDd2A1924aC77D1F15AFF3e8D68650d5826deC"); // Placeholder Ethereum address
+    const [contractBalance] = useState("1000 ETH"); // Placeholder contract balance
     const navigate = useNavigate();
 
     const fetchUserData = async () => {
@@ -128,7 +128,12 @@ const ProfileDashboard = () => {
                     <span>{currency}</span>
                   </div>
                 </div>
-                <button className="upgrade-button">Upgrade</button>
+                <button 
+                className="upgrade-button" 
+                onClick={() => alert('No new currency additions!')}
+              >
+                Upgrade
+              </button>
                 <div className="datasets-section">
                     <h3>Your Ethereum and Contract Info</h3>
                     <div className="info-item">
