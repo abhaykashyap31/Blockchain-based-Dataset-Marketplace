@@ -45,8 +45,3 @@ In the "server" folder, run the following command to start the Python server:
 ### `python3 run server`
 ### 7. Upload Files
 Now you can access the React client in your web browser at "http://localhost:3000/" and use it to upload and manage files in the decentralized file storage system.
-
-## Additional Notes
-If you need to have more nodes for testing, you can use Vagrant to set up additional virtual machines with Ganache instances.
-## License
-This project is licensed under the MIT License.
