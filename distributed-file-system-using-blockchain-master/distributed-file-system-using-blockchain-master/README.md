@@ -2,8 +2,6 @@
 ##  Overview
 This project is a decentralized file storage system built on the blockchain. It allows users to upload and manage files in a decentralized and secure manner using the Ethereum blockchain. The project is divided into three main components: the blockchain smart contracts, the React client, and the Python server.
 
-![gif](demo.gif?raw=true "gif")
-
 ## Prerequisites
 Before running this project, make sure you have the following software installed:
 
