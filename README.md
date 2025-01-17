@@ -3,9 +3,6 @@
 ## Overview
 DataScienceHub is a blockchain-based marketplace designed for seamless uploading, downloading, and exchanging of datasets. Built with modern web technologies, it ensures secure transactions using Ethereum smart contracts, distributed storage via IPFS, and efficient data retrieval using B-trees.
 
-### Mentor
-Dr. Suchetna Chakraborty
-
 ## Features
 - **Dataset Exchange**: Users can upload and download datasets with ease.
 - **Blockchain Security**: Ethereum-based smart contracts secure transactions.
