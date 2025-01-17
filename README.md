@@ -1,47 +1,101 @@
-# Distributed File System Using Blockchain
-##  Overview
-This project is a decentralized file storage system built on the blockchain. It allows users to upload and manage files in a decentralized and secure manner using the Ethereum blockchain. The project is divided into three main components: the blockchain smart contracts, the React client, and the Python server.
+# DataScienceHub | Blockchain-Based Dataset Marketplace
 
-## Prerequisites
-Before running this project, make sure you have the following software installed:
+## Overview
+DataScienceHub is a blockchain-based marketplace designed for seamless uploading, downloading, and exchanging of datasets. Built with modern web technologies, it ensures secure transactions using Ethereum smart contracts, distributed storage via IPFS, and efficient data retrieval using B-trees.
 
-Truffle: A development framework for Ethereum smart contracts.\
-Node.js: A JavaScript runtime environment.\
-Ganache: A personal Ethereum blockchain for local development.
-## Setup
-### 1. Run Ganache
-Start Ganache with the following configurations:
+### Mentor
+Dr. Suchetna Chakraborty
 
-Network ID: 5777\
-RPC Server: http://127.0.0.1:7545
-### 2. Compile and Migrate Smart Contracts
-Navigate to the "blockchain" folder and run the following commands:
+## Features
+- **Dataset Exchange**: Users can upload and download datasets with ease.
+- **Blockchain Security**: Ethereum-based smart contracts secure transactions.
+- **Distributed Storage**: Integrated IPFS for decentralized and reliable dataset storage.
+- **Efficient Search**: Utilized B-trees for dataset/article retrieval, reducing search time by 30%.
+- **Reward System**: Users are rewarded with digital currency for dataset exchanges.
 
-### `truffle compile`
-### `truffle migrate`
-This will compile and deploy the smart contracts to the local Ganache blockchain. After migration, copy the "Storage.json" file from "blockchain/build/contracts" to "client/src/artifacts/" and replace the existing "Storage.json" file.
+## Tech Stack
+- **Frontend**: React.js
+- **Database**: MongoDB
+- **Distributed Storage**: IPFS
+- **Blockchain**: Ethereum (Smart Contracts)
 
-### 3. Install Dependencies for React Client
-Navigate to the "client" folder and run the following command:
+## Project Duration
+October 2024 – November 2024
 
-### `npm install`
-This will install the required dependencies for the React client.
+## Installation and Setup
+Follow these steps to set up and run DataScienceHub locally:
 
-### 4. Run React Client
-In the "client" folder, run the following command to start the React client on "http://localhost:3000/":
+### Prerequisites
+- Node.js (v16 or above)
+- MongoDB (locally installed or cloud-based)
+- npm or yarn
+- Ethereum Wallet (e.g., MetaMask)
 
-### `npm run start`
-### 5. Setup Python Server
+### Steps
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/yourusername/datasciencehub.git
+   cd datasciencehub
+   ```
 
-Navigate to the "server" folder and create a virtual environment with the following command:
-### `python3 -m venv venv`
-Activate the virtual environment with the following command:
-### `source venv/bin/activate`
-Install the dependencies for the Python server with the following command:
-### `pip3 install -r requirements.txt`
-### 6. Run Python Server
-In the "server" folder, run the following command to start the Python server:
+2. **Install Dependencies**:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-### `python3 run server`
-### 7. Upload Files
-Now you can access the React client in your web browser at "http://localhost:3000/" and use it to upload and manage files in the decentralized file storage system.
+3. **Set Up Environment Variables**:
+   - Create a `.env` file in the root directory and add the following:
+     ```env
+     PORT=5000
+     MONGO_URI=your_mongodb_connection_string
+     REACT_APP_IPFS_GATEWAY=your_ipfs_gateway
+     SMART_CONTRACT_ADDRESS=your_contract_address
+     PRIVATE_KEY=your_private_key
+     ```
+
+4. **Deploy Smart Contracts**:
+   - Use Truffle or Hardhat to deploy the smart contract to an Ethereum network.
+   - Update the `SMART_CONTRACT_ADDRESS` in the `.env` file.
+
+5. **Start the Application**:
+   - Start the backend:
+     ```bash
+     npm run start
+     # or
+     yarn start
+     ```
+   - Start the frontend:
+     ```bash
+     cd client
+     npm start
+     ```
+
+   Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
+
+## Usage
+1. **Sign Up**:
+   - Create a new account or connect using your Ethereum wallet.
+2. **Upload Datasets**:
+   - Upload datasets to IPFS and share metadata on the marketplace.
+3. **Download Datasets**:
+   - Browse and purchase datasets using digital currency.
+4. **Earn Rewards**:
+   - Gain digital currency rewards for dataset uploads and transactions.
+
+## Key Components
+- **Smart Contracts**: Enable secure and transparent dataset transactions on the Ethereum blockchain.
+- **Distributed Storage**: IPFS ensures datasets are stored in a decentralized manner.
+- **Efficient Retrieval**: B-trees reduce search time for datasets and articles by 30%.
+
+## Future Enhancements
+- **Advanced Search Filters**: Include filters for dataset categories, sizes, and ratings.
+- **Mobile Application**: Develop a companion app for Android and iOS.
+- **Cross-Blockchain Compatibility**: Support other blockchain platforms like Solana or Binance Smart Chain.
+
+## Contributing
+Contributions are welcome! To contribute:
+1. Fork the repository.
+2. Create a new branch for your feature/bugfix.
+3. Submit a pull request.
